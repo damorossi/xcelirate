@@ -83,7 +83,7 @@
 
       > strong {
         @include light-title($text-main);
-        color: $white;
+        color: $text-dark;
         font-size: 8px;
         font-weight: 100;
         margin: 0;

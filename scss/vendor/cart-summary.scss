@@ -51,14 +51,16 @@
   
     &__products {
       align-self: center;
+      border-bottom: solid 1px $border-lighter;
       display: flex;
       flex-direction: column;
       font-size: 12px;
-      height: 100%;
+      height: 86%;
       justify-self: center;
       line-height: 0.6;
       margin-left: 9%;
       width: 86%;
+
       &-total-cost {
         color: $text-obscure;
       }

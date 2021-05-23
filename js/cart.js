@@ -85,6 +85,7 @@ function drawProductsTable(nodeContainer, nodeSelector = null) {
     const imageNode = createDomElment('img', '', 'products__item-image', 'src', `./public/images/${product.id}.jpg`);
     const innertCaption = createDomElment('strong', `Product Code ${product.code}`, '', '', '');
     const caption = createDomElment('span', `${product.name}`, 'products__item-name', '', '');
+
     const counter = createDomElment('div', '', 'products__item-counter', '', '');
     const buttonPlus = createDomElment('button', '+', 'products__item-add', 'id', `button-${product.id}-plus`);
 
