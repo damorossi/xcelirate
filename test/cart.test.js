@@ -1,4 +1,5 @@
 const { drawProductsTable, createDomElment } = require('../js/cart');
+const storeModule = require('../js/store');
 
 describe('Given two functions which creates elements and renders them', () => {
   describe('when the creator is invoked', () => {
@@ -16,7 +17,7 @@ describe('Given two functions which creates elements and renders them', () => {
       const baseElement = document.createElement('ul');
       baseElement.setAttribute('id', 'container');
       drawProductsTable('container', baseElement);
-      expect(baseElement.childElementCount).toBe(3);
+      expect(baseElement.childElementCount).toBe(storeModule.store.products.length);
     });
   });
 });
