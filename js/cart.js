@@ -26,27 +26,32 @@ const createDomElment = (nodeName, nodeContent, nodeClass, nodeAttr, attrValue) 
 };
 
 function updateShoppingCartView() {
-  const node = document.getElementById('cart_overview');
+  let node = document.getElementById('cart_overview');
+  if (!node) {
+    node = createDomElment('p', '', 'cart__product-count', 'id', 'cart_overview');
+  }
   const totalItems = countTotalItems();
   const overallCost = shoppingCartModule.getOverallCost();
   const totalCostNoDiscount = shoppingCartModule.getCostWithNoDiscount();
   node.innerHTML = `${totalItems} Items <strong class="products__total-qty">${totalCostNoDiscount} €<strong>`;
   const costNode = document.getElementById('total-cost');
-  costNode.innerHTML = `TOTAL COST <strong class="cart__total-cost">${overallCost} €<strong>`;
-  const cartContainer = document.getElementById('cart_products');
+  if (costNode !== null) {
+    costNode.innerHTML = `TOTAL COST <strong class="cart__total-cost">${overallCost} €<strong>`;
+    const cartContainer = document.getElementById('cart_products');
 
-  cartContainer.innerHTML = '';
-  if (storeModule.store.cart.products.length > 0) {
-    storeModule.store.cart.products.forEach((item) => {
-      const moneySaved = (item.product.price * item.quantity - item.totalPrice);
-      if (moneySaved !== 0) {
-        const promo = storeModule.store.promotions.find(({ code }) => code === item.product.code);
-        const subcontent = `<ul class='cart__products-overview-list'><li>${promo.name}</li>  <li>${moneySaved} € </li></ul>`;
-        const itemNode = createDomElment('li', '', 'cart__products-item', '');
-        itemNode.innerHTML = subcontent;
-        cartContainer.append(itemNode);
-      }
-    });
+    cartContainer.innerHTML = '';
+    if (storeModule.store.cart.products.length > 0) {
+      storeModule.store.cart.products.forEach((item) => {
+        const moneySaved = (item.product.price * item.quantity - item.totalPrice);
+        if (moneySaved !== 0) {
+          const promo = storeModule.store.promotions.find(({ code }) => code === item.product.code);
+          const subcontent = `<ul class='cart__products-overview-list'><li>${promo.name}</li>  <li>${moneySaved} € </li></ul>`;
+          const itemNode = createDomElment('li', '', 'cart__products-item', '');
+          itemNode.innerHTML = subcontent;
+          cartContainer.append(itemNode);
+        }
+      });
+    }
   }
 }
 
@@ -73,7 +78,7 @@ const handleAdd = (id, qty, price) => {
 // FIXME
 // This is a way long mehtod, due the quantity of html elements, would be good to see if I can
 // reduce the quantity of lines.
-function drawProductsTable(nodeContainer) {
+function drawProductsTable(nodeContainer, nodeSelector = null) {
   storeModule.store.products.forEach((product) => {
     const mainNode = createDomElment('li', '', 'products__item', 'id', `item-${product.id}`);
     const figure = createDomElment('figure', '', 'products__item-image-container', '', '');
@@ -104,8 +109,10 @@ function drawProductsTable(nodeContainer) {
     mainNode.appendChild(counter);
     mainNode.appendChild(productPrice);
     mainNode.appendChild(productTotal);
-    const principalNode = document.getElementById(nodeContainer);
-    principalNode.appendChild(mainNode);
+    const principalNode = nodeSelector || document.getElementById(nodeContainer);
+    if (principalNode) {
+      principalNode.appendChild(mainNode);
+    }
     updateShoppingCartView();
   });
 }
