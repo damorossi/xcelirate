@@ -111,3 +111,4 @@ function drawProductsTable(nodeContainer) {
 }
 
 exports.drawProductsTable = drawProductsTable;
+exports.createDomElment = createDomElment;
