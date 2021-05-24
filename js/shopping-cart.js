@@ -4,7 +4,7 @@ const productsModule = require('./products');
 function getPriceOrDiscount(product, qty = 1) {
   const promo = productsModule.promotions.find((promotion) => promotion.code === product.code);
   let value = 0;
-  switch (promo.code) {
+  switch (promo?.code) {
     case 'GOKU':
       if (qty % 2 === 0) {
         value = (product.price * qty) * promo.price;
