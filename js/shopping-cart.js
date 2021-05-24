@@ -29,9 +29,11 @@ function getPriceOrDiscount(product, qty = 1) {
 
 function removeFromShoppingCart(productId, qty) {
   const cartProducts = storeModule.store.cart.products.filter(
-    (item) => item.product.id !== productId
+    (item) => item.product?.id !== productId
   );
-  const productToSubstract = storeModule.store.products.find((product) => product.id === productId);
+  const productToSubstract = storeModule.store.products.find(
+    (product) => product?.id === productId
+  );
 
   if (qty > 0) {
     const item = {
